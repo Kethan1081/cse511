@@ -74,7 +74,7 @@ object SpatialQuery extends App{
 
     val px: Double = points(0).toDouble
     val py: Double = points(1).toDouble
-    if(rx1 < px && ry1 < py && rx2 > px && ry2 > py) {
+    if(rx1 <= px && ry1 <= py && rx2 >= px && ry2 >= py) {
       return true
     }
     false
