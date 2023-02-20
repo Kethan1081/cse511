@@ -8,7 +8,6 @@ object SpatialQuery extends App{
     val pointDf = spark.read.format("com.databricks.spark.csv").option("delimiter","\t").option("header","false").load(arg1);
     pointDf.createOrReplaceTempView("point")
 
-    // YOU NEED TO FILL IN THIS USER DEFINED FUNCTION
     spark.udf.register("ST_Contains",ST_Contains _)
 
     val resultDf = spark.sql("select * from point where ST_Contains('"+arg2+"',point._c0)")
@@ -25,7 +24,6 @@ object SpatialQuery extends App{
     val rectangleDf = spark.read.format("com.databricks.spark.csv").option("delimiter","\t").option("header","false").load(arg2);
     rectangleDf.createOrReplaceTempView("rectangle")
 
-    // YOU NEED TO FILL IN THIS USER DEFINED FUNCTION
     spark.udf.register("ST_Contains",ST_Contains _)
 
     val resultDf = spark.sql("select * from rectangle,point where ST_Contains(rectangle._c0,point._c0)")
@@ -39,7 +37,6 @@ object SpatialQuery extends App{
     val pointDf = spark.read.format("com.databricks.spark.csv").option("delimiter","\t").option("header","false").load(arg1);
     pointDf.createOrReplaceTempView("point")
 
-    // YOU NEED TO FILL IN THIS USER DEFINED FUNCTION
     spark.udf.register("ST_Within",ST_Within _)
 
     val resultDf = spark.sql("select * from point where ST_Within(point._c0,'"+arg2+"',"+arg3+")")
@@ -56,7 +53,6 @@ object SpatialQuery extends App{
     val pointDf2 = spark.read.format("com.databricks.spark.csv").option("delimiter","\t").option("header","false").load(arg2);
     pointDf2.createOrReplaceTempView("point2")
 
-    // YOU NEED TO FILL IN THIS USER DEFINED FUNCTION
     spark.udf.register("ST_Within",ST_Within _)
     val resultDf = spark.sql("select * from point1 p1, point2 p2 where ST_Within(p1._c0, p2._c0, "+arg3+")")
     resultDf.show()
